@@ -6,54 +6,7 @@
  * Time: 13:57
  * TODO separate PHP
  */
-
-    $today = "";
-    $message = "";
-
-    if ($_GET['city']) {
-//    if (array_key_exists('city', $_GET['city'])) {
-
-        $city = str_replace(' ', '-',$_GET['city']);
-        $weatherSite = "http://www.weather-forecast.com/locations/". $city ."/forecasts/latest";
-        $file_headers = @get_headers($weatherSite);
-
-//        print_r($file_headers);
-//
-//        if ($file_headers == $city) {
-        if ($file_headers[0] == "HTTP/1.1 404 Not Found") {
-//            $exists = false;
-//            echo "<script>alert($file_headers[0])</script>";
-            $message = "City with this name couldn't be found";
-
-        } else {
-//            $exists = true;
-            $getContent = file_get_contents($weatherSite);
-            $delimiterBefore = '3 Day Weather Forecast Summary:</b><span class="read-more-small"><span class="read-more-content"> <span class="phrase">';
-            $delimiterAfter = '</span></span></span></p>';
-//            echo $getContent;
-            $pageExplode = explode($delimiterBefore, $getContent);
-
-            $size = sizeof($pageExplode);
-
-            if ($size > 1) {
-
-                $pageExplode2 = explode($delimiterAfter, $pageExplode[1]);
-
-                $size2 = sizeof($pageExplode2);
-                if ($size2  > 1) {
-//            print_r ($pageExplode[0]);
-                    $today = $pageExplode2[0];
-                } else  {
-                    $message = "City with this name couldn't be found";
-                }
-
-            } else {}
-
-            $message = "City with this name couldn't be found";
-
-        }
-
-    }
+    include("functions/functions.php");
 
 ?>
 
@@ -67,39 +20,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
-    <style type="text/css">
-        * {
-
-        }
-
-        html {
-            background: url("images/Blue Sea Horizon - Weather Wallpaper Image featuring Clouds.jpg") no-repeat center center fixed;
-/*            background: url(http://blogimg.ohmynews.com/attach/26119/1102880939.jpg) no-repeat center center fixed;*/
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
-
-        body {
-            background: none;
-            color: white;
-        }
-
-        .container {
-            text-align:  center;
-            margin-top: 150px;
-            width: 600px;
-        }
-
-        input {
-            margin: 35px 0;
-        }
-
-        #today {
-            margin: 35px 0;
-        }
-    </style>
+   <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
     <div class="container">
